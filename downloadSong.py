@@ -17,7 +17,7 @@ def printUsage():
   print "  Switches:"
   print "\t--help"
   print "\t\tDisplay the help screen"
-  print "\t--editDownloadLocation <Path>"
+  print "\t--editSaveDirectory <Path>"
   print "\t\tChange the download directory to <Path>"
   print "\t--usePrevDirectory"
   print "\t\tRevert the download directory to the previous directory"
