@@ -139,9 +139,9 @@ for arg in arguments:
     print "The download location was changed to: " + settings["previousDirectory"]
     sys.exit(0)
 
-if len(arguments) == 2:
+if len(sys.argv) == 2:
   downloadSongByQuery()
-elif len(arguments) == 3:
+elif len(sys.argv) == 3:
   downloadSongByQueryAndDuration()
 else:
   print "There were " + str(len(arguments)) + " arguments given when 2 or 3 were expected"
