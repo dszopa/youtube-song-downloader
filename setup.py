@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import os
 
 # Make sure that python 2.7 and FFMPEG are installed
