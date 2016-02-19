@@ -19,6 +19,9 @@ for arg in arguments:
   if arg == "--usePrevDirectory":
     songDownloader.usePrevDirectory()
     sys.exit(0)
+  if arg == "--link":
+    songDownloader.downloadSongByYoutubeLink(arguments.next())
+    sys.exit(0)
 
 if len(sys.argv) == 2:
   songDownloader.downloadSongByQuery(sys.argv[1])

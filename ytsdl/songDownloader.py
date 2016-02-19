@@ -47,7 +47,6 @@ class songDownloader(object):
     print "\t\tDownload Song by Query."
 
   def verifyNoDuplicateSong(self, query):
-    os.chdir(self.settings["saveDirectory"])
     filesInDirectory = os.listdir(os.getcwd())
     for fileName in filesInDirectory:
       if fileName == query + ".mp3":
@@ -72,6 +71,7 @@ class songDownloader(object):
     print "The download location was changed to: " + self.settings["previousDirectory"]
 
   def downloadSongByQuery(self, query):
+    os.chdir(self.settings["saveDirectory"])
     self.verifyNoDuplicateSong(query)
 
     youtube = build(self.YOUTUBE_API_SERVICE_NAME, self.YOUTUBE_API_VERSION,
@@ -105,6 +105,7 @@ class songDownloader(object):
     givenDuration = map(int, duration.split(":"))
     givenDuration = givenDuration[0] * 60 + givenDuration[1]
 
+    os.chdir(self.settings["saveDirectory"])
     self.verifyNoDuplicateSong(query)
 
     youtube = build(self.YOUTUBE_API_SERVICE_NAME, self.YOUTUBE_API_VERSION,
@@ -149,3 +150,9 @@ class songDownloader(object):
           sys.exit(0)
 
     print "No song with the specified duration +/- 5 seconds was found, are you sure you entered it correctly?"
+
+  def downloadSongByYoutubeLink(self, link):
+    print "Attempting to download video: " + link
+    os.chdir(self.settings["saveDirectory"])
+    os.system("youtube-dl --extract-audio --audio-format mp3 " + link)
+
