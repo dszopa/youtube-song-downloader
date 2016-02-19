@@ -6,7 +6,7 @@ import os
 
 # Program Logic
 arguments = iter(sys.argv)
-songDownloader = songDownloader.songDownloader()
+songDownloader = songDownloader()
 for arg in arguments:
   if arg == "--help":
     songDownloader.printUsage()

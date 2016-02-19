@@ -91,20 +91,12 @@ class songDownloader(object):
         os.system("youtube-dl --extract-audio --audio-format mp3 https://www.youtube.com/watch?v=" + search_result["id"]["videoId"])
         print "Renaming file to: " + query + ".mp3"
 
-        # TODO figure out a better way to handle multple mixed characters, | is also creating problmes
-        if "\"" in search_result["snippet"]["title"]:
-          if os.path.exists(temp + "-" + search_result["id"]["videoId"] + ".mp3"):
-            temp =search_result["snippet"]["title"].replace("\"", "\'")
-            os.rename(temp + "-" + search_result["id"]["videoId"] + ".mp3", query + ".mp3")
-            print "File was saved in: " + self.settings["saveDirectory"]
-          else:
-            print "Unable to rename file: " + temp + "-" + search_result["id"]["videoId"] + ".mp3" + " not found"
+        temp = search_result["snippet"]["title"].replace("\"", "\'").replace("|", "_")
+        if os.path.exists(temp + "-" + search_result["id"]["videoId"] + ".mp3"):
+          os.rename(temp + "-" + search_result["id"]["videoId"] + ".mp3", query + ".mp3")
+          print "File was saved in: " + self.settings["saveDirectory"]
         else:
-          if os.path.exists(search_result["snippet"]["title"] + "-" + search_result["id"]["videoId"] + ".mp3"):
-            os.rename(search_result["snippet"]["title"] + "-" + search_result["id"]["videoId"] + ".mp3", query + ".mp3")
-            print "File was saved in: " + self.settings["saveDirectory"]
-          else:
-            print "Unable to rename file: " + search_result["snippet"]["title"] + "-" + search_result["id"]["videoId"] + ".mp3" + " not found"
+          print "Unable to rename file: " + temp + "-" + search_result["id"]["videoId"] + ".mp3" + "was not found"
         sys.exit(0)
 
     print "No song with the specified duration +/- 5 seconds was found, are you sure you entered it correctly?"
@@ -148,20 +140,12 @@ class songDownloader(object):
           os.system("youtube-dl --extract-audio --audio-format mp3 https://www.youtube.com/watch?v=" + search_result["id"]["videoId"])
           print "Renaming file to: " + query + ".mp3"
 
-          # TODO figure out a better way to handle multple mixed characters, | is also creating problmes
-          if "\"" in search_result["snippet"]["title"]:
-            if os.path.exists(temp + "-" + search_result["id"]["videoId"] + ".mp3"):
-              temp =search_result["snippet"]["title"].replace("\"", "\'")
-              os.rename(temp + "-" + search_result["id"]["videoId"] + ".mp3", query + ".mp3")
-              print "File was saved in: " + self.settings["saveDirectory"]
-            else:
-              print "Unable to rename file: " + temp + "-" + search_result["id"]["videoId"] + ".mp3" + " not found"
+          temp = search_result["snippet"]["title"].replace("\"", "\'").replace("|", "_")
+          if os.path.exists(temp + "-" + search_result["id"]["videoId"] + ".mp3"):
+            os.rename(temp + "-" + search_result["id"]["videoId"] + ".mp3", query + ".mp3")
+            print "File was saved in: " + self.settings["saveDirectory"]
           else:
-            if os.path.exists(search_result["snippet"]["title"] + "-" + search_result["id"]["videoId"] + ".mp3"):
-              os.rename(search_result["snippet"]["title"] + "-" + search_result["id"]["videoId"] + ".mp3", query + ".mp3")
-              print "File was saved in: " + self.settings["saveDirectory"]
-            else:
-              print "Unable to rename file: " + search_result["snippet"]["title"] + "-" + search_result["id"]["videoId"] + ".mp3" + " not found"
+            print "Unable to rename file: " + temp + "-" + search_result["id"]["videoId"] + ".mp3" + "was not found"
           sys.exit(0)
 
     print "No song with the specified duration +/- 5 seconds was found, are you sure you entered it correctly?"
