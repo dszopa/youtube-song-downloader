@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 
-import ytsdl
 import sys
 import os
+sys.path.insert(0, os.path.abspath('..'))
 
-# Program Logic
+import ytsdl
+
 arguments = iter(sys.argv)
 songDownloader = ytsdl.songDownloader()
 buf = 5 # buffer is default of 5
-queryStart = 1
+queryIndex = 1
 argCount = len(sys.argv)
 for index, arg in enumerate(arguments):
   if arg == "--help":
@@ -27,20 +28,20 @@ for index, arg in enumerate(arguments):
     sys.exit(0)
   if arg == "--exact":
     print index
-    if index <= queryStart:
-      queryStart += 1
+    if index <= queryIndex:
+      queryIndex += 1
     buf = 0
     argCount -= 1
   if arg == "--buffer":
-    if index <= queryStart:
-      queryStart += 2
+    if index <= queryIndex:
+      queryIndex += 2
     buf = int(arguments.next())
     argCount -= 2
 
 if argCount == 2:
-  songDownloader.downloadSongByQuery(sys.argv[queryStart])
+  songDownloader.downloadSongByQuery(sys.argv[queryIndex])
 elif argCount == 3:
-  songDownloader.downloadSongByQueryAndDuration(sys.argv[queryStart], sys.argv[queryStart+1], buf)
+  songDownloader.downloadSongByQueryAndDuration(sys.argv[queryIndex], sys.argv[queryIndex+1], buf)
 else:
   print "Invalid number of arguments given"
   songDownloader.printUsage()
