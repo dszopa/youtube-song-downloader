@@ -8,15 +8,15 @@ Once python and ffmpeg are installed you can setup youtube-song-downloader with 
 ## Usage
 Search for song to download with a query and duration:
 
-```python downloadSong.py "Artist Name - Song Name" "Minutes:Seconds"```
+```python youtube-song-downloader.py "Artist Name - Song Name" "Minutes:Seconds"```
 
 Search and download the first song from a given query:
 
-```python downloadSong.py "Artist Name - Song Name"```
+```python youtube-song-downloader.py "Artist Name - Song Name"```
 
 To update the directory which files are saved to use the command:
 
-```python downloadSong.py --editSaveDirectory "Path to directory"```
+```python youtube-song-downloader.py --editSaveDirectory "Path to directory"```
 
 ## License
 

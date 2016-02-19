@@ -22,6 +22,7 @@ class songDownloader(object):
           python downloadSong.py Artist Name - Song Name
               Download Song by Query.
   """
+
   def __init__(self):
     self.DEVELOPER_KEY = "AIzaSyAwF1yzv2ZA2kvKCOs0sRkYeXs5NnKDIFA"
     self.YOUTUBE_API_SERVICE_NAME = "youtube"
@@ -70,9 +71,7 @@ class songDownloader(object):
       jsonFile.write(json.dumps(self.settings, sort_keys=True, indent=4))
     print "The download location was changed to: " + self.settings["previousDirectory"]
 
-  def downloadSongByQuery(self):
-    query = sys.argv[1]
-
+  def downloadSongByQuery(self, query):
     self.verifyNoDuplicateSong(query)
 
     youtube = build(self.YOUTUBE_API_SERVICE_NAME, self.YOUTUBE_API_VERSION,
@@ -91,19 +90,27 @@ class songDownloader(object):
         print "Attempting to download video: https://www.youtube.com/watch?v=" + search_result["id"]["videoId"]
         os.system("youtube-dl --extract-audio --audio-format mp3 https://www.youtube.com/watch?v=" + search_result["id"]["videoId"])
         print "Renaming file to: " + query + ".mp3"
-        print "File was saved in: " + self.settings["saveDirectory"]
+
+        # TODO figure out a better way to handle multple mixed characters, | is also creating problmes
         if "\"" in search_result["snippet"]["title"]:
-          temp =search_result["snippet"]["title"].replace("\"", "\'")
-          os.rename(temp + "-" + search_result["id"]["videoId"] + ".mp3", query + ".mp3")
+          if os.path.exists(temp + "-" + search_result["id"]["videoId"] + ".mp3"):
+            temp =search_result["snippet"]["title"].replace("\"", "\'")
+            os.rename(temp + "-" + search_result["id"]["videoId"] + ".mp3", query + ".mp3")
+            print "File was saved in: " + self.settings["saveDirectory"]
+          else:
+            print "Unable to rename file: " + temp + "-" + search_result["id"]["videoId"] + ".mp3" + " not found"
         else:
-          os.rename(search_result["snippet"]["title"] + "-" + search_result["id"]["videoId"] + ".mp3", query + ".mp3")
+          if os.path.exists(search_result["snippet"]["title"] + "-" + search_result["id"]["videoId"] + ".mp3"):
+            os.rename(search_result["snippet"]["title"] + "-" + search_result["id"]["videoId"] + ".mp3", query + ".mp3")
+            print "File was saved in: " + self.settings["saveDirectory"]
+          else:
+            print "Unable to rename file: " + search_result["snippet"]["title"] + "-" + search_result["id"]["videoId"] + ".mp3" + " not found"
         sys.exit(0)
 
     print "No song with the specified duration +/- 5 seconds was found, are you sure you entered it correctly?"
 
-  def downloadSongByQueryAndDuration(self):
-    query = sys.argv[1]
-    givenDuration = map(int, sys.argv[2].split(":"))
+  def downloadSongByQueryAndDuration(self, query, duration):
+    givenDuration = map(int, duration.split(":"))
     givenDuration = givenDuration[0] * 60 + givenDuration[1]
 
     self.verifyNoDuplicateSong(query)
@@ -140,37 +147,21 @@ class songDownloader(object):
           print "Attempting to download video: https://www.youtube.com/watch?v=" + search_result["id"]["videoId"]
           os.system("youtube-dl --extract-audio --audio-format mp3 https://www.youtube.com/watch?v=" + search_result["id"]["videoId"])
           print "Renaming file to: " + query + ".mp3"
-          print "File was saved in: " + self.settings["saveDirectory"]
+
+          # TODO figure out a better way to handle multple mixed characters, | is also creating problmes
           if "\"" in search_result["snippet"]["title"]:
-            temp =search_result["snippet"]["title"].replace("\"", "\'")
-            os.rename(temp + "-" + search_result["id"]["videoId"] + ".mp3", query + ".mp3")
+            if os.path.exists(temp + "-" + search_result["id"]["videoId"] + ".mp3"):
+              temp =search_result["snippet"]["title"].replace("\"", "\'")
+              os.rename(temp + "-" + search_result["id"]["videoId"] + ".mp3", query + ".mp3")
+              print "File was saved in: " + self.settings["saveDirectory"]
+            else:
+              print "Unable to rename file: " + temp + "-" + search_result["id"]["videoId"] + ".mp3" + " not found"
           else:
-            os.rename(search_result["snippet"]["title"] + "-" + search_result["id"]["videoId"] + ".mp3", query + ".mp3")
+            if os.path.exists(search_result["snippet"]["title"] + "-" + search_result["id"]["videoId"] + ".mp3"):
+              os.rename(search_result["snippet"]["title"] + "-" + search_result["id"]["videoId"] + ".mp3", query + ".mp3")
+              print "File was saved in: " + self.settings["saveDirectory"]
+            else:
+              print "Unable to rename file: " + search_result["snippet"]["title"] + "-" + search_result["id"]["videoId"] + ".mp3" + " not found"
           sys.exit(0)
 
     print "No song with the specified duration +/- 5 seconds was found, are you sure you entered it correctly?"
-
-# Program Logic
-arguments = iter(sys.argv)
-songDownloader = songDownloader()
-for arg in arguments:
-  if arg == "--help":
-    songDownloader.printUsage()
-    sys.exit(0)
-  if arg == "--editSaveDirectory":
-    path = arguments.next()
-    songDownloader.editDownloadLocation(path)
-    print "The download location was changed to: " + path
-    sys.exit(0)
-  if arg == "--usePrevDirectory":
-    songDownloader.usePrevDirectory()
-    sys.exit(0)
-
-if len(sys.argv) == 2:
-  songDownloader.downloadSongByQuery()
-elif len(sys.argv) == 3:
-  songDownloader.downloadSongByQueryAndDuration()
-else:
-  print "There were " + str(len(sys.argv)) + " arguments given when 2 or 3 were expected"
-  songDownloader.printUsage()
-  sys.exit(-1)
