@@ -1,0 +1,11 @@
+# Until actual unit tests are added use these commands as test cases.
+
+python youtube-song-downloader.py "Tiesto - Secrets"
+
+python youtube-song-downloader.py "Tiesto - Secrets" "4:28"
+
+python youtube-song-downloader.py --exact "Tiesto - Secrets" "4:28"
+
+python youtube-song-downloader.py --buffer 10 "Tiesto - Secrets" "4:28"
+
+python youtube-song-downloader.py --link https://www.youtube.com/watch?v=EFU_LIzIfyw

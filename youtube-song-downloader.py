@@ -7,7 +7,10 @@ import os
 # Program Logic
 arguments = iter(sys.argv)
 songDownloader = ytsdl.songDownloader()
-for arg in arguments:
+buf = 5 # buffer is default of 5
+queryStart = 1
+argCount = len(sys.argv)
+for index, arg in enumerate(arguments):
   if arg == "--help":
     songDownloader.printUsage()
     sys.exit(0)
@@ -22,12 +25,24 @@ for arg in arguments:
   if arg == "--link":
     songDownloader.downloadSongByYoutubeLink(arguments.next())
     sys.exit(0)
+  if arg == "--exact":
+    print index
+    if index <= queryStart:
+      queryStart += 1
+    buf = 0
+    argCount -= 1
+  if arg == "--buffer":
+    if index <= queryStart:
+      queryStart += 2
+    buf = int(arguments.next())
+    argCount -= 2
 
-if len(sys.argv) == 2:
-  songDownloader.downloadSongByQuery(sys.argv[1])
-elif len(sys.argv) == 3:
-  songDownloader.downloadSongByQueryAndDuration(sys.argv[1], sys.argv[2])
+# TODO because you can specify switches the location of query and duration can change, how to account for this?
+if argCount == 2:
+  songDownloader.downloadSongByQuery(sys.argv[queryStart])
+elif argCount == 3:
+  songDownloader.downloadSongByQueryAndDuration(sys.argv[queryStart], sys.argv[queryStart+1], buf)
 else:
-  print "There were " + str(len(sys.argv)) + " arguments given when 2 or 3 were expected"
+  print "Invalid number of arguments given"
   songDownloader.printUsage()
   sys.exit(-1)

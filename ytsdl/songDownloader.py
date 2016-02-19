@@ -11,15 +11,21 @@ class songDownloader(object):
   """Program Usage:
         Switches:
           --help
-              Display the help screen
+              Display the help screen.
           --editSaveDirectory <Path>
               Change the download directory to <Path>
           --usePrevDirectory
-              Revert the download directory to the previous directory
+              Revert the download directory to the previous directory.
+          --link <Youtube URL>
+              Download a song from the specified Youtube URL
+          --exact
+              Looks for a song with the exact duration specified.
+          --buffer <BUFFER>
+              Sets the buffer that duration can be to <BUFFER> seconds.
         Commands:
-          python downloadSong.py Artist Name - Song Name Minutes:Seconds
-              Download Song By Query and Duration.
-          python downloadSong.py Artist Name - Song Name
+          python youtube-song-downloader.py Artist Name - Song Name Minutes:Seconds
+              Download Song By Query and Duration. (Default 5 second buffer on duration)
+          python youtube-song-downloader.py Artist Name - Song Name
               Download Song by Query.
   """
 
@@ -101,7 +107,7 @@ class songDownloader(object):
 
     print "No song with the specified duration +/- 5 seconds was found, are you sure you entered it correctly?"
 
-  def downloadSongByQueryAndDuration(self, query, duration):
+  def downloadSongByQueryAndDuration(self, query, duration, buf):
     givenDuration = map(int, duration.split(":"))
     givenDuration = givenDuration[0] * 60 + givenDuration[1]
 
@@ -136,7 +142,7 @@ class songDownloader(object):
           else:
              duration = duration[0] * 60
 
-        if duration - givenDuration < 5 and duration - givenDuration > -5:
+        if duration - givenDuration <= buf and duration - givenDuration >= buf * -1:
           print "Attempting to download video: https://www.youtube.com/watch?v=" + search_result["id"]["videoId"]
           os.system("youtube-dl --extract-audio --audio-format mp3 https://www.youtube.com/watch?v=" + search_result["id"]["videoId"])
           print "Renaming file to: " + query + ".mp3"
@@ -149,7 +155,7 @@ class songDownloader(object):
             print "Unable to rename file: " + temp + "-" + search_result["id"]["videoId"] + ".mp3" + "was not found"
           sys.exit(0)
 
-    print "No song with the specified duration +/- 5 seconds was found, are you sure you entered it correctly?"
+    print "No song with the specified duration +/- " + str(buf) + " seconds was found, are you sure you entered it correctly?"
 
   def downloadSongByYoutubeLink(self, link):
     print "Attempting to download video: " + link
