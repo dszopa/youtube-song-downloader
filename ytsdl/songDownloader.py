@@ -151,6 +151,7 @@ class songDownloader(object):
           if os.path.exists(temp + "-" + search_result["id"]["videoId"] + ".mp3"):
             os.rename(temp + "-" + search_result["id"]["videoId"] + ".mp3", query + ".mp3")
             print "File was saved in: " + self.settings["saveDirectory"]
+            print "The file downloaded had a difference of " + str(duration - givenDuration) + " seconds from the specified duration"
           else:
             print "Unable to rename file: " + temp + "-" + search_result["id"]["videoId"] + ".mp3" + "was not found"
           sys.exit(0)

@@ -37,7 +37,6 @@ for index, arg in enumerate(arguments):
     buf = int(arguments.next())
     argCount -= 2
 
-# TODO because you can specify switches the location of query and duration can change, how to account for this?
 if argCount == 2:
   songDownloader.downloadSongByQuery(sys.argv[queryStart])
 elif argCount == 3:
