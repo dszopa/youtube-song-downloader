@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
-from ytsdl.songDownloader import songDownloader
+import ytsdl
 import sys
 import os
 
 # Program Logic
 arguments = iter(sys.argv)
-songDownloader = songDownloader()
+songDownloader = ytsdl.songDownloader()
 for arg in arguments:
   if arg == "--help":
     songDownloader.printUsage()
