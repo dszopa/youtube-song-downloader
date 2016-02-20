@@ -4,6 +4,8 @@ from .context import ytsdl
 import os
 import sys
 
+# If any of the downloadSong test fail you most likely have to delete files from the save directory
+
 os.chdir("/Users/danny/Documents/Coding/Python/youtube-song-downloader/bin")
 songDownloader = ytsdl.songDownloader()
 
