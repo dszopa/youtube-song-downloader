@@ -77,7 +77,28 @@ def test_editDownloadLocation():
 	assert finalPastDir == True
 
 def test_usePrevDirectory():
-	assert 1 == 1
+	with open('settings.json', 'r') as data_file:    
+		initialSettings = json.load(data_file)
+
+	songDownloader.editDownloadLocation("previousTestLocation")
+	songDownloader.editDownloadLocation("testLocation")
+	songDownloader.usePrevDirectory()
+
+	with open('settings.json', 'r') as data_file:
+		finalSettings = json.load(data_file)
+
+	finalCurrentDir = finalSettings["saveDirectory"] == "previousTestLocation"
+	finalPastDir = finalSettings["previousDirectory"] == "previousTestLocation"
+
+	with open('settings.json', 'w') as jsonFile:
+		jsonFile.write(json.dumps(initialSettings, sort_keys=True, indent=4))
+
+	# These are needed because the data is cached in memory for ytsdl.songDownloader()
+	songDownloader.editDownloadLocation("/Users/danny/Music/test/")
+	songDownloader.editDownloadLocation("/Users/danny/Music/test/")
+
+	assert finalCurrentDir == True
+	assert finalPastDir == True
 
 def test_downloadSongByQuery():
 	songDownloader.downloadSongByQuery("Rick Astley - Never Gonna Give You Up")
