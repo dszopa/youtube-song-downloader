@@ -62,7 +62,9 @@ class songDownloader(object):
   def verifySearchResults(self, search_response):
       if len(search_response.get("items", [])) == 0:
         print "There were no results for the specified song, are you sure you entered it correctly?"
-        sys.exit(0)
+        return False
+      else:
+        return True
 
   def editDownloadLocation(self, path):
     self.settings["previousDirectory"] = self.settings["saveDirectory"]
@@ -89,7 +91,8 @@ class songDownloader(object):
       maxResults=10
     ).execute()
 
-    self.verifySearchResults(search_response)
+    if self.verifySearchResults(search_response) != True:
+      return None
 
     for search_result in search_response.get("items", []):
       if search_result["id"]["kind"] == "youtube#video":
@@ -124,7 +127,8 @@ class songDownloader(object):
       maxResults=10
     ).execute()
 
-    self.verifySearchResults(search_response)
+    if self.verifySearchResults(search_response) != True:
+      return None
 
     for search_result in search_response.get("items", []):
       if search_result["id"]["kind"] == "youtube#video":

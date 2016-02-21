@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
 from .context import ytsdl
+from apiclient.discovery import build
 import os
 import sys
 
@@ -19,7 +20,30 @@ def test_verifyNoDuplicateSong():
 	assert 1 == 1
 
 def test_verifySearchResults():
-	assert 1 == 1
+	DEVELOPER_KEY = "AIzaSyAwF1yzv2ZA2kvKCOs0sRkYeXs5NnKDIFA"
+	YOUTUBE_API_SERVICE_NAME = "youtube"
+	YOUTUBE_API_VERSION = "v3"
+
+	youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
+	developerKey=DEVELOPER_KEY)
+
+	invalid_search_response = youtube.search().list(
+	  q="kahsdlfhaslkdjfhalskhjdflkajhsdflkjahsdflkjahsldkfhjaslkfhaklsdjhflkasjhdfklasjhdflkajshdflkajshdflkjashdflkjashdfkljashdklfjahslkdjfhaskljdfh",
+	  part="id,snippet",
+	  maxResults=10
+	).execute()
+
+	valid_search_response = youtube.search().list(
+	  q="Tiesto - Secrets",
+	  part="id,snippet",
+	  maxResults=10
+	).execute()
+
+	invalidResults = songDownloader.verifySearchResults(invalid_search_response)
+	validResults = songDownloader.verifySearchResults(valid_search_response)
+
+	assert invalidResults == False
+	assert validResults == True
 
 def test_editDownloadLocation():
 	assert 1 == 1
