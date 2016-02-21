@@ -17,7 +17,16 @@ def test_printUsage():
 	assert 1 == 1
 
 def test_verifyNoDuplicateSong():
-	assert 1 == 1
+	os.chdir("/Users/danny/Documents/Coding/Python/youtube-song-downloader/bin")
+	open("Test.mp3", 'a')
+	duplicateSong = songDownloader.verifyNoDuplicateSong("Test")
+	noDuplicateSong = songDownloader.verifyNoDuplicateSong("Noone would ever name their song this")
+	os.remove("Test.mp3")
+	os.chdir("/Users/danny/Documents/Coding/Python/youtube-song-downloader/bin")
+
+	assert duplicateSong == False
+	assert noDuplicateSong == True
+
 
 def test_verifySearchResults():
 	DEVELOPER_KEY = "AIzaSyAwF1yzv2ZA2kvKCOs0sRkYeXs5NnKDIFA"

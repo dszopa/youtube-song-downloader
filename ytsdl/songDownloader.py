@@ -57,7 +57,8 @@ class songDownloader(object):
     for fileName in filesInDirectory:
       if fileName == query + ".mp3":
         print "The desired song \"" + query + ".mp3\" already exists in the directory"
-        sys.exit(-1)
+        return False
+    return True
 
   def verifySearchResults(self, search_response):
       if len(search_response.get("items", [])) == 0:
@@ -80,7 +81,9 @@ class songDownloader(object):
 
   def downloadSongByQuery(self, query):
     os.chdir(self.settings["saveDirectory"])
-    self.verifyNoDuplicateSong(query)
+
+    if self.verifyNoDuplicateSong(query) != True:
+      return None
 
     youtube = build(self.YOUTUBE_API_SERVICE_NAME, self.YOUTUBE_API_VERSION,
       developerKey=self.DEVELOPER_KEY)
@@ -116,7 +119,9 @@ class songDownloader(object):
     givenDuration = givenDuration[0] * 60 + givenDuration[1]
 
     os.chdir(self.settings["saveDirectory"])
-    self.verifyNoDuplicateSong(query)
+
+    if self.verifyNoDuplicateSong(query) != True:
+      return None
 
     youtube = build(self.YOUTUBE_API_SERVICE_NAME, self.YOUTUBE_API_VERSION,
       developerKey=self.DEVELOPER_KEY)
