@@ -2,6 +2,9 @@
 import pytest
 from .context import ytsdl
 from apiclient.discovery import build
+import json
+import urllib
+import unicodedata
 import os
 import sys
 
@@ -13,9 +16,6 @@ songDownloader = ytsdl.songDownloader()
 def test_directoryIsCorrect():
 	assert os.getcwd() == "/Users/danny/Documents/Coding/Python/youtube-song-downloader/bin"
 
-def test_printUsage():
-	assert 1 == 1
-
 def test_verifyNoDuplicateSong():
 	os.chdir("/Users/danny/Documents/Coding/Python/youtube-song-downloader/bin")
 	open("Test.mp3", 'a')
@@ -26,7 +26,6 @@ def test_verifyNoDuplicateSong():
 
 	assert duplicateSong == False
 	assert noDuplicateSong == True
-
 
 def test_verifySearchResults():
 	DEVELOPER_KEY = "AIzaSyAwF1yzv2ZA2kvKCOs0sRkYeXs5NnKDIFA"
@@ -55,7 +54,27 @@ def test_verifySearchResults():
 	assert validResults == True
 
 def test_editDownloadLocation():
-	assert 1 == 1
+	with open('settings.json', 'r') as data_file:    
+		initialSettings = json.load(data_file)
+
+	songDownloader.editDownloadLocation("testLocation")
+	songDownloader.editDownloadLocation("testLocation")
+
+	with open('settings.json', 'r') as data_file:
+		finalSettings = json.load(data_file)
+
+	finalCurrentDir = finalSettings["saveDirectory"] == "testLocation"
+	finalPastDir = finalSettings["previousDirectory"] == "testLocation"
+
+	with open('settings.json', 'w') as jsonFile:
+		jsonFile.write(json.dumps(initialSettings, sort_keys=True, indent=4))
+
+	# These are needed because the data is cached in memory for ytsdl.songDownloader()
+	songDownloader.editDownloadLocation("/Users/danny/Music/test/")
+	songDownloader.editDownloadLocation("/Users/danny/Music/test/")
+
+	assert finalCurrentDir == True
+	assert finalPastDir == True
 
 def test_usePrevDirectory():
 	assert 1 == 1
@@ -77,10 +96,10 @@ def test_downloadSongByQueryAndDuration():
 	containsFile = False
 	if "Rick Astley - Never Gonna Give You Up.mp3" in filenameList:
 		containsFile = True
-	assert containsFile == True
 	os.chdir("/Users/danny/Music/test/")
 	os.system("rm -f \"Rick Astley - Never Gonna Give You Up.mp3\"")
 	os.chdir("/Users/danny/Documents/Coding/Python/youtube-song-downloader/bin")
+	assert containsFile == True
 
 def test_exactDownloadSongByQueryAndDuration():
 	songDownloader.downloadSongByQueryAndDuration("Rick Astley - Never Gonna Give You Up", "3:33", 0)
@@ -88,10 +107,10 @@ def test_exactDownloadSongByQueryAndDuration():
 	containsFile = False
 	if "Rick Astley - Never Gonna Give You Up.mp3" in filenameList:
 		containsFile = True
-	assert containsFile == True
 	os.chdir("/Users/danny/Music/test/")
 	os.system("rm -f \"Rick Astley - Never Gonna Give You Up.mp3\"")
 	os.chdir("/Users/danny/Documents/Coding/Python/youtube-song-downloader/bin")
+	assert containsFile == True
 
 def test_largeBufferDownloadSongByQueryAndDuration():
 	songDownloader.downloadSongByQueryAndDuration("Rick Astley - Never Gonna Give You Up", "3:33", 30)
@@ -99,10 +118,10 @@ def test_largeBufferDownloadSongByQueryAndDuration():
 	containsFile = False
 	if "Rick Astley - Never Gonna Give You Up.mp3" in filenameList:
 		containsFile = True
-	assert containsFile == True
 	os.chdir("/Users/danny/Music/test/")
 	os.system("rm -f \"Rick Astley - Never Gonna Give You Up.mp3\"")
 	os.chdir("/Users/danny/Documents/Coding/Python/youtube-song-downloader/bin")
+	assert containsFile == True
 
 def test_downloadSongByYoutubeLink():
 	songDownloader.downloadSongByYoutubeLink("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
@@ -110,7 +129,7 @@ def test_downloadSongByYoutubeLink():
 	containsFile = False
 	if "Rick Astley - Never Gonna Give You Up-dQw4w9WgXcQ.mp3" in filenameList:
 		containsFile = True
-	assert containsFile == True
 	os.chdir("/Users/danny/Music/test/")
 	os.system("rm -f \"Rick Astley - Never Gonna Give You Up-dQw4w9WgXcQ.mp3\"")
 	os.chdir("/Users/danny/Documents/Coding/Python/youtube-song-downloader/bin")
+	assert containsFile == True
