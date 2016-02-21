@@ -66,10 +66,10 @@ def test_downloadSongByQuery():
 	containsFile = False
 	if "Rick Astley - Never Gonna Give You Up.mp3" in filenameList:
 		containsFile = True
-	assert containsFile == True
 	os.chdir("/Users/danny/Music/test/")
 	os.system("rm -f \"Rick Astley - Never Gonna Give You Up.mp3\"")
 	os.chdir("/Users/danny/Documents/Coding/Python/youtube-song-downloader/bin")
+	assert containsFile == True
 
 def test_downloadSongByQueryAndDuration():
 	songDownloader.downloadSongByQueryAndDuration("Rick Astley - Never Gonna Give You Up", "3:33", 5)
