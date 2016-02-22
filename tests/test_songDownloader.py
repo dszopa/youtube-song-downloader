@@ -8,21 +8,18 @@ import unicodedata
 import os
 import sys
 
-# If any of the downloadSong test fail you most likely have to delete files from the save directory
-
-os.chdir("/Users/danny/Documents/Coding/Python/youtube-song-downloader/bin")
+os.chdir(os.getcwd() + "/ytsdl")
 songDownloader = ytsdl.songDownloader()
+origDir = os.getcwd()
 
 def test_directoryIsCorrect():
-	assert os.getcwd() == "/Users/danny/Documents/Coding/Python/youtube-song-downloader/bin"
+	assert "ytsdl" in os.getcwd()
 
 def test_verifyNoDuplicateSong():
-	os.chdir("/Users/danny/Documents/Coding/Python/youtube-song-downloader/bin")
 	open("Test.mp3", 'a')
 	duplicateSong = songDownloader.verifyNoDuplicateSong("Test")
 	noDuplicateSong = songDownloader.verifyNoDuplicateSong("Noone would ever name their song this")
 	os.remove("Test.mp3")
-	os.chdir("/Users/danny/Documents/Coding/Python/youtube-song-downloader/bin")
 
 	assert duplicateSong == False
 	assert noDuplicateSong == True
@@ -108,7 +105,7 @@ def test_downloadSongByQuery():
 		containsFile = True
 	os.chdir("/Users/danny/Music/test/")
 	os.system("rm -f \"Rick Astley - Never Gonna Give You Up.mp3\"")
-	os.chdir("/Users/danny/Documents/Coding/Python/youtube-song-downloader/bin")
+	os.chdir(origDir)
 	assert containsFile == True
 
 def test_downloadSongByQueryAndDuration():
@@ -119,7 +116,7 @@ def test_downloadSongByQueryAndDuration():
 		containsFile = True
 	os.chdir("/Users/danny/Music/test/")
 	os.system("rm -f \"Rick Astley - Never Gonna Give You Up.mp3\"")
-	os.chdir("/Users/danny/Documents/Coding/Python/youtube-song-downloader/bin")
+	os.chdir(origDir)
 	assert containsFile == True
 
 def test_exactDownloadSongByQueryAndDuration():
@@ -130,7 +127,7 @@ def test_exactDownloadSongByQueryAndDuration():
 		containsFile = True
 	os.chdir("/Users/danny/Music/test/")
 	os.system("rm -f \"Rick Astley - Never Gonna Give You Up.mp3\"")
-	os.chdir("/Users/danny/Documents/Coding/Python/youtube-song-downloader/bin")
+	os.chdir(origDir)
 	assert containsFile == True
 
 def test_largeBufferDownloadSongByQueryAndDuration():
@@ -141,7 +138,7 @@ def test_largeBufferDownloadSongByQueryAndDuration():
 		containsFile = True
 	os.chdir("/Users/danny/Music/test/")
 	os.system("rm -f \"Rick Astley - Never Gonna Give You Up.mp3\"")
-	os.chdir("/Users/danny/Documents/Coding/Python/youtube-song-downloader/bin")
+	os.chdir(origDir)
 	assert containsFile == True
 
 def test_downloadSongByYoutubeLink():
@@ -152,5 +149,5 @@ def test_downloadSongByYoutubeLink():
 		containsFile = True
 	os.chdir("/Users/danny/Music/test/")
 	os.system("rm -f \"Rick Astley - Never Gonna Give You Up-dQw4w9WgXcQ.mp3\"")
-	os.chdir("/Users/danny/Documents/Coding/Python/youtube-song-downloader/bin")
+	os.chdir(origDir)
 	assert containsFile == True

@@ -6,6 +6,7 @@ sys.path.insert(0, os.path.abspath('..'))
 
 import ytsdl
 
+os.chdir("../ytsdl/")
 arguments = iter(sys.argv)
 songDownloader = ytsdl.songDownloader()
 buf = 5 # buffer is default of 5
