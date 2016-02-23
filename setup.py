@@ -16,6 +16,11 @@ setup(name='youtube-song-downloader',
           'pytest',
       ],
       packages=['ytsdl'],
-      scripts=['bin/youtube-song-downloader'],
+      package_dir={'youtube-song-downloader': 'ytsdl'},
+      entry_points={
+        'console_scripts': [
+          'youtube-song-downloader = ytsdl.cli:main',
+        ],
+      },
       include_package_data=True,
       zip_safe=False)
