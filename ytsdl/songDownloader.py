@@ -11,9 +11,9 @@ class songDownloader(object):
           Switches:
             --help
                 Display the help screen.
-            --editSaveDirectory <Path>
+            --changeSaveDir <Path>
                 Change the download directory to <Path>
-            --usePrevDirectory
+            --usePrevDir
                 Revert the download directory to the previous directory.
             --link <Youtube URL>
                 Download a song from the specified Youtube URL
@@ -41,9 +41,9 @@ class songDownloader(object):
         print "  Switches:"
         print "\t--help"
         print "\t\tDisplay the help screen"
-        print "\t--editSaveDirectory <Path>"
+        print "\t--changeSaveDir <Path>"
         print "\t\tChange the download directory to <Path>"
-        print "\t--usePrevDirectory"
+        print "\t--usePrevDir"
         print "\t\tRevert the download directory to the previous directory"
         print "  Commands:"
         print "\tpython downloadSong.py \"Artist Name - Song Name\" \"Minutes:Seconds\""

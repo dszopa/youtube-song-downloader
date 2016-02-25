@@ -16,12 +16,12 @@ def main():
         if arg == "--help":
             songDownloader.printUsage()
             sys.exit(0)
-        if arg == "--editSaveDirectory":
+        if arg == "--changeSaveDir":
             path = arguments.next()
             songDownloader.editDownloadLocation(path)
             print "The download location was changed to: " + path
             sys.exit(0)
-        if arg == "--usePrevDirectory":
+        if arg == "--usePrevDir":
             songDownloader.usePrevDirectory()
             sys.exit(0)
         if arg == "--link":
