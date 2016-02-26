@@ -4,6 +4,7 @@ from apiclient.discovery import build
 import json
 import urllib
 import os
+import sys
 
 
 class songDownloader(object):
@@ -35,6 +36,11 @@ class songDownloader(object):
 
         with open('settings.json', 'r') as data_file:
             self.settings = json.load(data_file)
+
+        if not os.path.exists(self.settings["saveDirectory"]):
+            print "The specified save directory " + self.settings["saveDirectory"] + " does not exist!"
+            print "Please use --changeSaveDir <Path> to set the save directory"
+            sys.exit(-1)
 
     def printUsage(self):
         print "Program Usage:"
