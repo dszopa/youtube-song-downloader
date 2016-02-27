@@ -4,7 +4,7 @@ from setuptools import setup
 
 # Make sure that python 2.7 and FFMPEG are installed
 setup(name='youtube-song-downloader',
-      version='0.2',
+      version='0.3',
       description='A program used to search and download songs from Youtube.',
       url='https://github.com/dszopa/youtube-song-downloader',
       author='Daniel Szopa',

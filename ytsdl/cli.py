@@ -2,30 +2,31 @@
 
 import sys
 import os
-import ytsdl
+import songDownloader
 
 
 def main():
-    os.chdir(os.path.dirname(ytsdl.__file__))
+    # Need this line to import settings.json
+    os.chdir(os.path.dirname(songDownloader.__file__))
     arguments = iter(sys.argv)
-    songDownloader = ytsdl.songDownloader()
+    sd = songDownloader.songDownloader()
     buf = 5  # buffer is default of 5
     queryIndex = 1
     argCount = len(sys.argv)
     for index, arg in enumerate(arguments):
         if arg == "--help":
-            songDownloader.printUsage()
+            sd.printUsage()
             sys.exit(0)
         if arg == "--changeSaveDir":
             path = arguments.next()
-            songDownloader.editDownloadLocation(path)
+            sd.editDownloadLocation(path)
             print "The download location was changed to: " + path
             sys.exit(0)
         if arg == "--usePrevDir":
-            songDownloader.usePrevDirectory()
+            sd.usePrevDirectory()
             sys.exit(0)
         if arg == "--link":
-            songDownloader.downloadSongByYoutubeLink(arguments.next())
+            sd.downloadSongByYoutubeLink(arguments.next())
             sys.exit(0)
         if arg == "--exact":
             print index
@@ -40,12 +41,12 @@ def main():
             argCount -= 2
 
     if argCount == 2:
-        songDownloader.downloadSongByQuery(sys.argv[queryIndex])
+        sd.downloadSongByQuery(sys.argv[queryIndex])
     elif argCount == 3:
-        songDownloader.downloadSongByQueryAndDuration(sys.argv[queryIndex], sys.argv[queryIndex+1], buf)
+        sd.downloadSongByQueryAndDuration(sys.argv[queryIndex], sys.argv[queryIndex+1], buf)
     else:
         print "Invalid number of arguments given"
-        songDownloader.printUsage()
+        sd.printUsage()
         sys.exit(-1)
 
 if __name__ == "__main__":

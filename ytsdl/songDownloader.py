@@ -87,7 +87,7 @@ class songDownloader(object):
     def downloadSongByQuery(self, query):
         os.chdir(self.settings["saveDirectory"])
 
-        if self.verifyNoDuplicateSong(query) != True:
+        if self.verifyNoDuplicateSong(query) is not True:
             return None
 
         youtube = build(self.YOUTUBE_API_SERVICE_NAME, self.YOUTUBE_API_VERSION,
@@ -99,7 +99,7 @@ class songDownloader(object):
             maxResults=10
         ).execute()
 
-        if self.verifySearchResults(search_response) != True:
+        if self.verifySearchResults(search_response) is not True:
             return None
 
         for search_result in search_response.get("items", []):
