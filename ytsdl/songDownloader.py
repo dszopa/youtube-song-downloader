@@ -39,8 +39,14 @@ class songDownloader(object):
 
         if not os.path.exists(self.settings["saveDirectory"]):
             print "The specified save directory " + self.settings["saveDirectory"] + " does not exist!"
-            print "Please use --changeSaveDir <Path> to set the save directory"
-            sys.exit(-1)
+            print "Would you like to create it?"
+            print "[Y/n]"
+            decision = raw_input()
+            if decision == 'Y' or decision == 'y':
+                os.makedirs(self.settings["saveDirectory"])
+            else:
+                print "Please use --changeSaveDir <Path> to set the save directory"
+                sys.exit(-1)
 
     def printUsage(self):
         print "Program Usage:"
