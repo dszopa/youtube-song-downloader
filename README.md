@@ -40,6 +40,13 @@ To use the previous directory use the command:
 
 ```youtube-song-downloader --usePrevDir```
 
+## Development
+To run tests use the command ```make test```
+
+To run the development command line interface use the command:
+
+```python cli.py "params"```
+
 
 ## License
 
