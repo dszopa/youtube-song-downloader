@@ -14,7 +14,7 @@ def main():
     queryIndex = 1
     argCount = len(sys.argv)
     for index, arg in enumerate(arguments):
-        if arg == "--help":
+        if arg == "--help" or arg == "-h":
             sd.printUsage()
             sys.exit(0)
         if arg == "--changeSaveDir":

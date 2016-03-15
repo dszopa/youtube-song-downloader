@@ -12,21 +12,23 @@ class songDownloader(object):
           Switches:
             --help
                 Display the help screen.
-            --changeSaveDir <Path>
-                Change the download directory to <Path>
+            --changeSaveDir \"save path\"
+                Change the download directory to <save path>.
             --usePrevDir
                 Revert the download directory to the previous directory.
             --link <Youtube URL>
-                Download a song from the specified Youtube URL
+                Download a song from the specified Youtube URL.
             --exact
                 Looks for a song with the exact duration specified.
             --buffer <BUFFER>
                 Sets the buffer that duration can be to <BUFFER> seconds.
           Commands:
-            python youtube-song-downloader.py Artist Name - Song Name Minutes:Seconds
+            youtube-song-downloader \"Artist Name - Song Name\" \"Minutes:Seconds\"
                 Download Song By Query and Duration. (Default 5 second buffer on duration)
-            python youtube-song-downloader.py Artist Name - Song Name
+            youtube-song-downloader \"Artist Name - Song Name\"
                 Download Song by Query.
+            youtube-song-downloader --link <Youtube URL>
+                Download  Song by Youtube URL.
     """
 
     def __init__(self):
@@ -45,7 +47,7 @@ class songDownloader(object):
             if decision == 'Y' or decision == 'y':
                 os.makedirs(self.settings["saveDirectory"])
             else:
-                print "Please use --changeSaveDir <Path> to set the save directory"
+                print "Please use --changeSaveDir \"save path\" to set the save directory"
                 sys.exit(-1)
 
     def printUsage(self):
@@ -53,15 +55,17 @@ class songDownloader(object):
         print "  Switches:"
         print "\t--help"
         print "\t\tDisplay the help screen"
-        print "\t--changeSaveDir <Path>"
-        print "\t\tChange the download directory to <Path>"
+        print "\t--changeSaveDir \"save path\""
+        print "\t\tChange the download directory to \"save path\""
         print "\t--usePrevDir"
         print "\t\tRevert the download directory to the previous directory"
         print "  Commands:"
-        print "\tpython downloadSong.py \"Artist Name - Song Name\" \"Minutes:Seconds\""
-        print "\t\tDownload Song By Query and Duration."
-        print "\tpython downloadSong.py \"Artist Name - Song Name\""
-        print "\t\tDownload Song by Query."
+        print "\tyoutube-song-downloader \"Artist Name - Song Name\" \"Minutes:Seconds\""
+        print "\t\tDownload Song By Query and Duration"
+        print "\tyoutube-song-downloader \"Artist Name - Song Name\""
+        print "\t\tDownload Song by Query"
+        print "\tyoutube-song-downloader --link <Youtube URL>"
+        print "\t\tDownload Song by Youtube URL"
 
     def verifyNoDuplicateSong(self, query):
         filesInDirectory = os.listdir(os.getcwd())

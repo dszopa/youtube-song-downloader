@@ -10,8 +10,15 @@ or with setup.py from the repository using the command:
 
 ```python setup.py install```
 
+After installation you will need to configure your save directory with:
+
+```youtube-song-downloader --changeSaveDir "save path"```
+
 
 ## Usage
+
+#####The Quotation (") marks below are needed on the queries in order for the program to register them properly. Make sure that you remember to add them!
+
 Search for song to download with a search query and duration (Default is +/- 5 seconds):
 
 ```youtube-song-downloader "Artist Name - Song Name" "Minutes:Seconds"```
@@ -39,6 +46,10 @@ To update the directory which files are saved to use the command:
 To use the previous directory use the command:
 
 ```youtube-song-downloader --usePrevDir```
+
+To see the list of commands in the terminal use the command:
+
+```youtube-song-downloader --help```
 
 ## Development
 To run tests use the command ```make test```
