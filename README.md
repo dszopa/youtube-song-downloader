@@ -17,7 +17,7 @@ After installation you will need to configure your save directory with:
 
 ## Usage
 
-#####The Quotation (") marks below are needed on the queries in order for the program to register them properly. Make sure that you remember to add them!
+##### The Quotation (") marks below are needed on the queries in order for the program to register them properly. Make sure that you remember to add them!
 
 Search for song to download with a search query and duration (Default is +/- 5 seconds):
 
